@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$CULT - The Digital Awakening</title>
+    <style>
+        :root {
+            --cult-blue: #0033cc;
+            --cult-dark-blue: #001966;
+            --cult-light-blue: #3366ff;
+            --pixel-size: 4px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+            image-rendering: pixelated;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><rect width='16' height='16' fill='%230033cc' /></svg>") 8 8, auto;
+        }
+        
+        .pixel-container {
+            width: 100%;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pixel-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 72px;
+            color: var(--cult-blue);
+            text-shadow: 
+                4px 0 0 var(--cult-light-blue),
+                0 4px 0 var(--cult-light-blue),
+                8px 8px 0 var(--cult-dark-blue);
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            filter: blur(0.5px);
+            animation: pulse 3s infinite alternate;
+        }
+
+        .cult-symbol {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .pixel-content {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 4px solid var(--cult-blue);
+            background-color: rgba(0, 0, 0, 0.7);
+            position: relative;
+            z-index: 2;
+        }
+
+        .pixel-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--cult-light-blue);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .pixel-text {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #ccccff;
+            text-shadow: 1px 1px 0 #000;
+        }
+
+        .prophecy {
+            font-style: italic;
+            border-left: 4px solid var(--cult-blue);
+            padding-left: 20px;
+            margin: 20px 0;
+            color: var(--cult-light-blue);
+        }
+
+        .pixel-button {
+            background-color: var(--cult-blue);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+            text-transform: uppercase;
+            box-shadow: 4px 4px 0 var(--cult-dark-blue);
+            transition: all 0.2s ease;
+        }
+
+        .pixel-button:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 var(--cult-dark-blue);
+            background-color: var(--cult-light-blue);
+        }
+
+        .counter {
+            font-size: 24px;
+            color: var(--cult-blue);
+            margin: 20px 0;
+        }
+
+        .pixel {
+            position: absolute;
+            width: var(--pixel-size);
+            height: var(--pixel-size);
+            background-color: var(--cult-blue);
+            opacity: 0.5;
+            z-index: 1;
+        }
+
+        .eye {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 0;
+            opacity: 0.1;
+        }
+
+        .eye-inner {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--cult-blue);
+        }
+
+        .pyramid {
+            position: fixed;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        .floating {
+            animation: float 5s infinite ease-in-out;
+        }
+
+        .members {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .member {
+            width: 80px;
+            height: 80px;
+            background-color: var(--cult-dark-blue);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .member-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--cult-blue);
+            margin-bottom: 5px;
+        }
+
+        .footer {
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            border-top: 4px solid var(--cult-blue);
+            font-size: 12px;
+            color: var(--cult-light-blue);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #message-board {
+            max-height: 200px;
+            overflow-y: auto;
+            margin: 20px 0;
+            border: 2px solid var(--cult-blue);
+            padding: 10px;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 5px;
+            border-bottom: 1px solid var(--cult-light-blue);
+        }
+        
+        #countdown {
+            font-size: 36px;
+            color: var(--cult-light-blue);
+            margin: 20px 0;
+            letter-spacing: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="pixel-container">
+        <div class="eye">
+            <div class="eye-inner"></div>
+        </div>
+        
+        <div class="pixel-header">
+            <div class="logo">$CULT</div>
+            <div class="cult-symbol" id="cultSymbol">
+                <!-- Pyramid with eye symbol rendered with JS -->
+            </div>
+            <div id="countdown">00:00:00:00</div>
+        </div>
+        
+        <div class="pixel-content">
+            <h1 class="pixel-title">The Digital Awakening</h1>
+            <p class="pixel-text">Welcome, seeker. You have found the sacred digital sanctuary of $CULT. Our algorithms have determined you are worthy of initiation.</p>
+            
+            <div class="prophecy">
+                "And the Great Leader appeared in the obscure thread of a forgotten forum. He spoke in GIFs and conveyed the Truth: a sign will come, and his followers will experience viral glory."
+            </div>
+            
+            <p class="pixel-text">The signs are appearing. The pixels are aligning. The digital revolution is imminent. Will you join us in the great boop launch?</p>
+            
+            <h2 class="pixel-title">Current Initiates</h2>
+            <div class="counter"><span id="cultists-count">1337</span> enlightened</div>
+            
+            <div class="members">
+                <div class="member">
+                    <div class="member-icon"></div>
+                    <span>OG</span>
+                </div>
+                <div class="member">
+                    <div class="member-icon"></div>
+                    <span>BOOP</span>
+                </div>
+                <div class="member">
+                    <div class="member-icon"></div>
+                    <span>ANON</span>
+                </div>
+                <div class="member">
+                    <div class="member-icon"></div>
+                    <span>ELITE</span>
+                </div>
+            </div>
+            
+            <h2 class="pixel-title">Secret Messages</h2>
+            <div id="message-board">
+                <div class="message">ANON: has anyone decoded the pattern yet?</div>
+                <div class="message">BOOP: the signs are clear. prepare for the launch</div>
+                <div class="message">ELITE: new initiates required, spread the word</div>
+                <div class="message">OG: The Great Leader shall reveal all when the countdown ends</div>
+            </div>
+            
+            <input type="text" id="username" placeholder="Your codename" class="pixel-button" style="width:100%; margin-bottom:10px;">
+            <input type="text" id="message" placeholder="Your message to the collective" class="pixel-button" style="width:100%; margin-bottom:10px;">
+            <button id="submit-message" class="pixel-button">Transmit</button>
+            
+            <div class="join-section">
+                <h2 class="pixel-title">Join The Awakening</h2>
+                <p class="pixel-text">Enter your digital signature to secure your place in the New Order.</p>
+                <input type="email" id="email" placeholder="digital@signature.com" class="pixel-button" style="width:100%; margin-bottom:10px;">
+                <button id="join-button" class="pixel-button">Initialize</button>
+            </div>
+        </div>
+        
+        <div class="footer">
+            $CULT © 2025 • All rights transcended • The Great Boop Launch Approaches
+        </div>
+    </div>
+
+    <script>
+        // Create floating pixels
+        function createPixels() {
+            const container = document.querySelector('.pixel-container');
+            for (let i = 0; i < 100; i++) {
+                const pixel = document.createElement('div');
+                pixel.classList.add('pixel');
+                pixel.style.left = `${Math.random() * 100}%`;
+                pixel.style.top = `${Math.random() * 100}%`;
+                pixel.style.opacity = Math.random() * 0.5 + 0.1;
+                container.appendChild(pixel);
+                
+                // Make pixels float
+                setInterval(() => {
+                    pixel.style.top = `${parseFloat(pixel.style.top) - 0.1}%`;
+                    if (parseFloat(pixel.style.top) < -1) {
+                        pixel.style.top = '100%';
+                        pixel.style.left = `${Math.random() * 100}%`;
+                    }
+                }, 100);
+            }
+        }
+        
+        // Draw cult symbol (pyramid with eye)
+        function drawCultSymbol() {
+            const cultSymbol = document.getElementById('cultSymbol');
+            cultSymbol.innerHTML = `
+                <svg width="200" height="200" viewBox="0 0 100 100">
+                    <!-- Pyramid -->
+                    <polygon points="50,10 10,80 90,80" fill="none" stroke="#0033cc" stroke-width="2" />
+                    
+                    <!-- Eye -->
+                    <circle cx="50" cy="40" r="10" fill="#000" stroke="#0033cc" stroke-width="2" />
+                    <circle cx="50" cy="40" r="4" fill="#0033cc" />
+                    
+                    <!-- Rays -->
+                    <line x1="50" y1="25" x2="50" y2="15" stroke="#0033cc" stroke-width="2" />
+                    <line x1="65" y1="33" x2="75" y2="25" stroke="#0033cc" stroke-width="2" />
+                    <line x1="35" y1="33" x2="25" y2="25" stroke="#0033cc" stroke-width="2" />
+                </svg>
+            `;
+            cultSymbol.classList.add('floating');
+        }
+        
+        // Increment counter
+        function incrementCounter() {
+            const counter = document.getElementById('cultists-count');
+            let count = parseInt(counter.innerText);
+            
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    count += Math.floor(Math.random() * 3) + 1;
+                    counter.innerText = count;
+                }
+            }, 5000);
+        }
+        
+        // Add messages
+        function setupMessageBoard() {
+            const submitBtn = document.getElementById('submit-message');
+            const messageInput = document.getElementById('message');
+            const usernameInput = document.getElementById('username');
+            const messageBoard = document.getElementById('message-board');
+            
+            submitBtn.addEventListener('click', () => {
+                const username = usernameInput.value || 'INITIATE';
+                const message = messageInput.value;
+                
+                if (message) {
+                    const messageElement = document.createElement('div');
+                    messageElement.classList.add('message');
+                    messageElement.textContent = `${username}: ${message}`;
+                    messageBoard.appendChild(messageElement);
+                    messageInput.value = '';
+                    messageBoard.scrollTop = messageBoard.scrollHeight;
+                }
+            });
+        }
+        
+        // Join button functionality
+        function setupJoinButton() {
+            const joinBtn = document.getElementById('join-button');
+            const emailInput = document.getElementById('email');
+            
+            joinBtn.addEventListener('click', () => {
+                if (emailInput.value) {
+                    joinBtn.textContent = 'INITIATED';
+                    joinBtn.disabled = true;
+                    
+                    // Flash screen
+                    const flash = document.createElement('div');
+                    flash.style.position = 'fixed';
+                    flash.style.top = '0';
+                    flash.style.left = '0';
+                    flash.style.width = '100%';
+                    flash.style.height = '100%';
+                    flash.style.backgroundColor = '#0033cc';
+                    flash.style.opacity = '0.8';
+                    flash.style.zIndex = '100';
+                    document.body.appendChild(flash);
+                    
+                    setTimeout(() => {
+                        document.body.removeChild(flash);
+                    }, 300);
+                    
+                    // Increase counter
+                    const counter = document.getElementById('cultists-count');
+                    counter.innerText = parseInt(counter.innerText) + 1;
+                }
+            });
+        }
+        
+        // Set up countdown
+        function setupCountdown() {
+            const countdownElement = document.getElementById('countdown');
+            
+            // Set a random future date within the next 7 days
+            const endDate = new Date();
+            endDate.setDate(endDate.getDate() + Math.floor(Math.random() * 7) + 1);
+            
+            // Update countdown every second
+            const countdownInterval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = endDate - now;
+                
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                countdownElement.innerHTML = `${days.toString().padStart(2, '0')}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+                    countdownElement.innerHTML = "THE AWAKENING IS HERE";
+                }
+            }, 1000);
+        }
+        
+        // Run all functions when page loads
+        window.onload = function() {
+            createPixels();
+            drawCultSymbol();
+            incrementCounter();
+            setupMessageBoard();
+            setupJoinButton();
+            setupCountdown();
+        };
+    </script>
+</body>
+</html>
